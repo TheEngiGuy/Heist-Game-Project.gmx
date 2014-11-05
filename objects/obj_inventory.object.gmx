@@ -25,13 +25,96 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Arrays
-sprites[0] = gui_drill
-sprites[1] = gui_c4
+            <string>xslots = 2; //number of horizontal slots
+yslots = 4; //number of vertical slots
+slotWidth = 32; //width of slot
+slotHeight = 32; //height of slot
 
-for(i=0;i&lt;5;i+=1){
-    inv[i,0]=0
-    inv[i,1]=0
+//initializing a 2D array which holds the object index and the sprite index
+var i;
+for(i=0;i&lt;xslots*yslots;i+=1) //loop 
+{
+invSlot[i,0] = -1; //object index
+invSlot[i,1] = -1; //sprite index
+}
+
+invSlot[0,1] = gui_drill;
+invSlot[1,1] = gui_c4;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw Inventory
+//first draw a background color for the inventory
+draw_set_alpha(0.6); //make it transparent
+draw_set_color(make_color_rgb(153,217,234)); //make_color_rgb just lets you make your own color, you
+//can find those values in paint
+draw_rectangle(x,y,x + xslots * slotWidth,y + yslots * slotHeight,false);
+
+//then draw the grid
+var i,slotX,slotY,countX,countY; //initializing temporary variables
+draw_set_color(c_white); //white grid
+for(i=0;i&lt;xslots*yslots;i+=1)  //loop through all slots
+{
+//Calculating at what xslot and yslot we are on
+countX = i mod xslots; //this is simple math, can't really explain it
+countY = i div xslots;
+
+//position of the current slot
+slotX = x + countX * slotWidth;
+slotY = y + countY * slotHeight;
+
+//draw the slot
+draw_rectangle(slotX,slotY,slotX + slotWidth,slotY + slotHeight,true);
+
+    //now if the slot has an item in it
+    if invSlot[i,1]!=-1
+    {
+    //then just draw the item's sprite index over this slot
+    draw_sprite(invSlot[i,1],0,slotX,slotY);
+    }
+
+    
+    //if the mouse is over this slot then just draw smaller rectangle to indicate that
+    if mouse_x&gt;slotX and mouse_y&gt;slotY and mouse_x&lt;slotX + slotWidth and mouse_y&lt;slotY + slotHeight
+    {
+    draw_rectangle(slotX + 2, slotY + 2, slotX + slotWidth - 2, slotY + slotHeight - 2, true);
+        
+        //now if the mouse is over a slot which has an item in it
+        if invSlot[i,1]!=-1 
+        {
+        //(you can even draw tooltips of the item here)
+        
+            //and he presses it
+            if mouse_check_button_pressed(mb_right)
+            {
+            //drop the item, oPlayer is the player object 
+            instance_create(oPlayer.x,oPlayer.y,invSlot[i,0] ); //creates the item at the player's position
+            invSlot[i,0] = -1; //clear slot's object index
+            invSlot[i,1] = -1; //clear slot's sprite index
+            }
+        }
+    }
+
 }
 </string>
           </argument>

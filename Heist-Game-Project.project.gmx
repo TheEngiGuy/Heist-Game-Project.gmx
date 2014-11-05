@@ -26,14 +26,12 @@
       <sprite>sprites\gui_slot</sprite>
       <sprite>sprites\gui_c4</sprite>
       <sprite>sprites\spr_escapevan</sprite>
+      <sprite>sprites\gui_null</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
-  <scripts name="scripts">
-    <script>scripts\script0.gml</script>
-    <script>scripts\ItemPickup.gml</script>
-  </scripts>
+  <scripts name="scripts"/>
   <fonts name="fonts">
     <font>fonts\font0</font>
   </fonts>
@@ -48,10 +46,6 @@
     <object>objects\obj_jewelry</object>
     <object>objects\obj_woodendoor</object>
     <objects name="GUI">
-      <object>objects\obj_slot0</object>
-      <object>objects\obj_slot</object>
-      <object>objects\obj_slot1</object>
-      <object>objects\obj_slot2</object>
       <object>objects\obj_inventory</object>
     </objects>
   </objects>
